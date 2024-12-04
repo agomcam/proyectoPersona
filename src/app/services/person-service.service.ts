@@ -21,7 +21,12 @@ export class PersonServiceService {
   constructor() {
   }
 
-  getPersonList(){
+  getPersonList() {
     return this.personsList;
+  }
+
+  deletePerson(id: number) {
+    let index = this.personsList.findIndex((person) => person.id === id);
+    this.personsList.splice(index, 1);
   }
 }
