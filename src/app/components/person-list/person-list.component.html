@@ -1,5 +1,10 @@
 <h1>Person list</h1>
+<div class="container">
+  <div class="row">
+    <ng-container *ngFor="let persona of persons">
+      <app-person-resumen class="d-flex justify-content-center col-md-3 m-3" [personaInput]="persona"></app-person-resumen>
+    </ng-container>
+  </div>
 
-<div *ngFor="let persona of persons">
-  <app-person-resumen [personaInput]="persona"></app-person-resumen>
 </div>
+
