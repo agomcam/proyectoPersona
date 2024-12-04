@@ -10,4 +10,5 @@ import {Person} from '../../models/Person.models';
 })
 export class PersonResumenComponent {
   @Input() personaInput: Person | null = null;
+  
 }
