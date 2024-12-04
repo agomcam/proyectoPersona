@@ -5,6 +5,7 @@ import {FormComponent} from './components/form/form.component';
 
 export const routes: Routes = [
   {path: 'personList', component: PersonListComponent},
+  {path:'formEdit/:id', component: FormComponent},
   {path: 'form', component: FormComponent},
   {path: 'notFound', component: NotFoundComponent},
   {path: '', redirectTo: '/personList', pathMatch: 'full'},

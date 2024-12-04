@@ -1,9 +1,9 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {Person} from '../../models/Person.models';
 import {PersonServiceService} from '../../services/person-service.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {customValidatorDNI} from './form.validators';
 
 @Component({
@@ -15,12 +15,12 @@ import {customValidatorDNI} from './form.validators';
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
-export class FormComponent implements OnChanges {
+export class FormComponent implements OnChanges, OnInit {
   formPerson: FormGroup;
   @Input()
   personEdit: Person | null = null;
 
-  constructor(private routerService: Router, private personService: PersonServiceService, formBuilder: FormBuilder) {
+  constructor(private route: ActivatedRoute, private routerService: Router, private personService: PersonServiceService, formBuilder: FormBuilder) {
     this.formPerson = formBuilder.group({
       'nombre': ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       'apellido': ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -29,7 +29,7 @@ export class FormComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['personEdit']) {
+    if (changes['personEdit'].currentValue) {
       const person = changes['personEdit'].currentValue as Person;
       this.formPerson.patchValue({
         nombre: person.name,
@@ -39,18 +39,54 @@ export class FormComponent implements OnChanges {
     }
   }
 
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      var id = Number(params.get('id'));
+      this.personEdit = this.personService.getPersonById(id);
+
+      if (!isNaN(id)) {
+        const person = this.personService.getPersonById(id);
+        if (person) {
+          this.personEdit = person;
+          this.formPerson.patchValue({
+            nombre: person.name,
+            apellido: person.surname,
+            dni: person.dni,
+          });
+        }
+      }
+
+    });
+
+  }
+
   onSubmit() {
     if (this.formPerson.valid) {
       let personForm = this.formPerson.value;
 
-      let person: Person = new Person(
-        Math.random() * 1000,
-        personForm.nombre,
-        personForm.apellido,
-        personForm.dni
-      )
+      if (this.personEdit) {
+        let person: Person = new Person(
+          this.personEdit.id,
+          personForm.nombre,
+          personForm.apellido,
+          personForm.dni
+        )
 
-      this.personService.addPerson(person)
+        this.personService.addPerson(person)
+      }else{
+        let person: Person = new Person(
+          0,
+          personForm.nombre,
+          personForm.apellido,
+          personForm.dni
+        )
+
+        this.personService.addPerson(person)
+      }
+
+
+
+
 
       this.routerService.navigate(['/personList'])
     }

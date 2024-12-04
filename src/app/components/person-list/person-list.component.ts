@@ -3,6 +3,7 @@ import {Person} from '../../models/Person.models';
 import {PersonServiceService} from '../../services/person-service.service';
 import {PersonResumenComponent} from '../person-resumen/person-resumen.component';
 import {CommonModule} from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-person-list',
@@ -14,7 +15,7 @@ import {CommonModule} from '@angular/common';
   styleUrl: './person-list.component.css'
 })
 export class PersonListComponent implements OnInit, OnChanges {
-
+  personEdit: Person | null = null;
   persons: Person[] = [];
 
   constructor(private personService: PersonServiceService) {
@@ -29,4 +30,6 @@ export class PersonListComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.persons = this.personService.getPersonList();
   }
+
+
 }
