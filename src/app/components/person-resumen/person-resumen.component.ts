@@ -14,8 +14,6 @@ import {Router} from '@angular/router';
 export class PersonResumenComponent {
   @Input() personaInput: Person = new Person(0, "Manolo", "Enrrique", "444444444T");
 
-  @Output()
-  personEdit = new EventEmitter<Person>();
 
   constructor(private routerService: Router, private service: PersonServiceService) {
   }
@@ -25,7 +23,6 @@ export class PersonResumenComponent {
   }
 
   editPerson(personId: number) {
-    this.personEdit.emit(this.personaInput);
     this.routerService.navigate([`formEdit/${personId}`])
   }
 }
