@@ -41,20 +41,18 @@ export class FormComponent implements OnChanges, OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      var id = Number(params.get('id'));
+      const id = Number(params.get('id'));
       this.personEdit = this.personService.getPersonById(id);
 
-      if (!isNaN(id)) {
-        const person = this.personService.getPersonById(id);
-        if (person) {
-          this.personEdit = person;
-          this.formPerson.patchValue({
-            nombre: person.name,
-            apellido: person.surname,
-            dni: person.dni,
-          });
-        }
+
+      if (this.personEdit) {
+        this.formPerson.patchValue({
+          nombre: this.personEdit.name,
+          apellido: this.personEdit.surname,
+          dni: this.personEdit.dni,
+        });
       }
+
 
     });
 
@@ -73,7 +71,7 @@ export class FormComponent implements OnChanges, OnInit {
         )
 
         this.personService.addPerson(person)
-      }else{
+      } else {
         let person: Person = new Person(
           0,
           personForm.nombre,
@@ -83,9 +81,6 @@ export class FormComponent implements OnChanges, OnInit {
 
         this.personService.addPerson(person)
       }
-
-
-
 
 
       this.routerService.navigate(['/personList'])

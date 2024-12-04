@@ -15,7 +15,6 @@ import {Router} from '@angular/router';
   styleUrl: './person-list.component.css'
 })
 export class PersonListComponent implements OnInit, OnChanges {
-  personEdit: Person | null = null;
   persons: Person[] = [];
 
   constructor(private personService: PersonServiceService) {
