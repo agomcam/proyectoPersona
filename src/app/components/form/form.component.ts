@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {CommonModule} from '@angular/common';
 import {Person} from '../../models/Person.models';
 import {PersonServiceService} from '../../services/person-service.service';
+import {Router} from '@angular/router';
+import {customValidatorDNI} from './form.validators';
 
 @Component({
   selector: 'app-form',
@@ -18,11 +20,11 @@ export class FormComponent implements OnChanges {
   @Input()
   personEdit: Person | null = null;
 
-  constructor(private personService: PersonServiceService, formBuilder: FormBuilder) {
+  constructor(private routerService: Router, private personService: PersonServiceService, formBuilder: FormBuilder) {
     this.formPerson = formBuilder.group({
-      'nombre': ['', [Validators.required]],
-      'apellido': ['', [Validators.required]],
-      'dni': ['', [Validators.required]],
+      'nombre': ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      'apellido': ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      'dni': ['', [Validators.required, customValidatorDNI()]],
     })
   }
 
@@ -50,7 +52,7 @@ export class FormComponent implements OnChanges {
 
       this.personService.addPerson(person)
 
-
+      this.routerService.navigate(['/personList'])
     }
 
 

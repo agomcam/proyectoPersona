@@ -2,17 +2,57 @@
   <form [formGroup]="formPerson" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="nombre" class="form-label">Nombre</label>
-      <input type="text" formControlName="nombre" class="form-control" id="nombre" aria-describedby="text">
+      <input [ngClass]="{
+      'is-invalid':this.formPerson.get('nombre')?.invalid && formPerson.get('nombre')?.touched,
+      'is-valid':this.formPerson.get('nombre')?.valid
+      }" type="text" formControlName="nombre" class="form-control" id="nombre" aria-describedby="text">
+    </div>
+    <div>
+      <small class="text-danger"
+             *ngIf="formPerson.get('nombre')?.errors?.['required'] && formPerson.get('nombre')?.touched">Nombre
+        requerido</small>
+      <small class="text-danger"
+             *ngIf="formPerson.get('nombre')?.errors?.['minlength'] && formPerson.get('nombre')?.touched">Tiene que
+        tener 2 letras</small>
+      <small class="text-danger"
+             *ngIf="formPerson.get('nombre')?.errors?.['maxlength'] && formPerson.get('nombre')?.touched">No puede
+        superar las 50 letras</small>
     </div>
 
     <div class="mb-3">
       <label for="apellido" class="form-label">Apellido</label>
-      <input type="text" class="form-control" formControlName="apellido" id="apellido" aria-describedby="text">
+      <input [ngClass]="{
+      'is-invalid':this.formPerson.get('apellido')?.invalid && formPerson.get('apellido')?.touched,
+      'is-valid':this.formPerson.get('apellido')?.valid
+      }" type="text" class="form-control" formControlName="apellido" id="apellido" aria-describedby="text">
+    </div>
+    <div>
+      <small class="text-danger"
+             *ngIf="formPerson.get('apellido')?.errors?.['required'] && formPerson.get('apellido')?.touched">apellido
+        requerido</small>
+      <small class="text-danger"
+             *ngIf="formPerson.get('apellido')?.errors?.['minlength'] && formPerson.get('apellido')?.touched">Tiene que
+        tener 2 letras</small>
+      <small class="text-danger"
+             *ngIf="formPerson.get('apellido')?.errors?.['maxlength'] && formPerson.get('apellido')?.touched">No puede
+        superar las 50 letras</small>
     </div>
 
     <div class="mb-3">
       <label for="dni" class="form-label">DNI</label>
-      <input type="text" class="form-control" formControlName="dni" id="dni" aria-describedby="text">
+      <input [ngClass]="{
+      'is-invalid':this.formPerson.get('dni')?.invalid && formPerson.get('dni')?.touched,
+      'is-valid':this.formPerson.get('dni')?.valid
+      }" type="text" class="form-control" formControlName="dni" id="dni" aria-describedby="text">
+    </div>
+    <div>
+      <small class="text-danger"
+             *ngIf="formPerson.get('dni')?.errors?.['required'] && formPerson.get('dni')?.touched">DNI
+        requerido</small>
+      <small class="text-danger"
+             *ngIf="formPerson.get('dni')?.errors?.['invalidDNIFormat'] && formPerson.get('dni')?.touched">DNI
+        incorrecto</small>
+
     </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
   </form>
