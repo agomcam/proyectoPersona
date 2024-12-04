@@ -4,6 +4,8 @@ export class Person {
   surname: string;
   dni: string;
 
+
+
   constructor(id: number, name: string, surname: string, dni: string) {
     this.id = id;
     this.name = name;

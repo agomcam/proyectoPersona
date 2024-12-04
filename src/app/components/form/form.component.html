@@ -1,9 +1,20 @@
-<form (ngSubmit)="onSubmit()" >
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Nombre</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-  </div>
+<div class="container">
+  <form [formGroup]="formPerson" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input type="text" formControlName="nombre" class="form-control" id="nombre" aria-describedby="text">
+    </div>
 
+    <div class="mb-3">
+      <label for="apellido" class="form-label">Apellido</label>
+      <input type="text" class="form-control" formControlName="apellido" id="apellido" aria-describedby="text">
+    </div>
 
-  <button type="submit" class="btn btn-primary">Guardar</button>
-</form>
+    <div class="mb-3">
+      <label for="dni" class="form-label">DNI</label>
+      <input type="text" class="form-control" formControlName="dni" id="dni" aria-describedby="text">
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </form>
+
+</div>

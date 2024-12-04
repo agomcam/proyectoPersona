@@ -29,4 +29,8 @@ export class PersonServiceService {
     let index = this.personsList.findIndex((person) => person.id === id);
     this.personsList.splice(index, 1);
   }
+
+  addPerson(person: Person) {
+    this.personsList.push(person);
+  }
 }
