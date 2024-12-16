@@ -32,19 +32,21 @@ export class PersonServiceService {
 
   addPerson(person: Person) {
     const index = this.personsList.findIndex(personlist => person.id === personlist.id);
+
+
     console.log(index)
     if (index <= -1) {
       person.id = Math.trunc(Math.random() * 1000) + 1;
       this.personsList.push(person);
-    console.log(person);
+      console.log(person);
     } else {
       this.personsList[index] = person;
     }
   }
 
-  getPersonById(id: number): Person|null {
+  getPersonById(id: number): Person | null {
     for (let i = 0; i < this.personsList.length; i++) {
-      if(id == this.personsList[i].id) {
+      if (id == this.personsList[i].id) {
         return this.personsList[i]
       }
     }
